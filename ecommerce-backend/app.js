@@ -1,7 +1,10 @@
 import express from "express";
+import userRoutes from "./routes/userRoutes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+
+
 
 //config 
 dotenv.config();//? database configuration from this config file will redirect to the app.js
@@ -14,6 +17,7 @@ app.use(cors())//? This enables CORS (Cross-Origin Resource Sharing).
 // and your backend (Node.js) is on another (e.g. localhost:5000),
 // CORS is required to allow communication between them.
 
+app.use("/api/users", userRoutes);
 //test route
 app.get("/",(req,res)=>{
     res.send("API is running..");
@@ -25,4 +29,4 @@ mongoose.connect(process.env.MONGO_URI)
     app.listen(PORT,()=> console.log(`Server running at PORT ${PORT}`));
 
 })
-.catch((err)=> console.log("MongoDB connection failed:" ,err))
+.catch((err)=> console.log("MongoDB connection failed:" ,err));
