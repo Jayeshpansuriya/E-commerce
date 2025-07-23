@@ -33,7 +33,7 @@ export const createProduct = async (req, res) => {
   try {
     const newProduct = new Product({
       ...req.body,
-      createdBy: req.user._id, 
+      createdBy: req.user._id, //? based on the user id only admin can add the product 
     });
     const savedProduct = await newProduct.save();
     console.log("✅ Product created by admin:", req.user._id);
