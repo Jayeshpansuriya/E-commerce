@@ -5,7 +5,8 @@ import {
     createProduct,
     updateProduct,
     deleteProduct,
-    deleteProductById
+    deleteProductById,
+    updateProductById
 
 
 } from "../controllers/productController.js";
@@ -19,6 +20,6 @@ router.get("/:id", getProductById);//?public
 router.post("/", verifyToken, isAdmin, createProduct);//?admin
 router.put("/:id", verifyToken, isAdmin, updateProduct);//? admin
 router.delete("/:id", verifyToken, isAdmin, deleteProduct);//?adm
-router.delete("/:id", verifyToken, isAdmin , deleteProductById);
-router.put("/:id", verifyToken,isAdmin,updateProductById);
+router.delete("/:id", verifyToken, isAdmin, deleteProductById);
+router.put("/:id", verifyToken, isAdmin, updateProductById);
 export default router;
