@@ -62,3 +62,42 @@ export const deleteProduct = async (req, res) => {
   if (!deleted) return res.status(404).json({ message: "Product not found" });
   res.json({ message: "Product deleted successfully" });
 };
+
+
+//? delete / api/products/:id
+
+export const deleteProductById = async(req,res)=>{
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+
+    if(!product){
+      return res.status(404).json({message:"product not found"});
+    }
+    res.json({message:"Product deleted successfully"});
+    
+  } catch (error) {
+    console.error("Error deleting product:",error);
+    res.status(500).json({message: "Server error while deleting product "});
+    
+  }
+};
+
+export const updateProductById = async (req,res)=>{
+  try {
+    const productId = req.params.id;
+    const updateData = req.body;
+    const updateProduct = await Product.findByIdAndUpdate(
+      productId,
+      updateData,
+      {new: true , runValidators:true}
+    );
+    if(!updateProduct){
+      return res.status(404).json({message: "product not found"});
+    }
+    
+  } catch (error) {
+    console.log("Error updating product:",error);
+    res.status(500).json({mssage: " Server error while updating product "});
+    
+  }
+};
