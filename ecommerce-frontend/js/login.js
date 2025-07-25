@@ -21,7 +21,7 @@ loginForm.addEventListener('submit',async(e)=>{
             localStorage.setItem("token",data.token);
 
             setTimeout(()=>{
-                window.location.href="../pages/home.html";
+                window.location.href="../pages/dashboard.html";
             },3000);
         }else{
             loginMessage.style.color ='red';

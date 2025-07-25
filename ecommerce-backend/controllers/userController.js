@@ -112,3 +112,10 @@ export const getAllUsers = async (req, res) => {
     });
   }
 }
+
+export const getMe = async(req,res)=>{
+  res.status(200).json({
+    email: res.user.email,
+    name:req.user.name,
+  });
+};

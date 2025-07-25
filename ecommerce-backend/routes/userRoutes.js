@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, loginUser ,updateUserProfile} from "../controllers/userController.js";
+import { registerUser, loginUser, updateUserProfile ,getMe } from "../controllers/userController.js";
 import protect from "../middlewares/authMiddleware.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import { getAllUsers } from "../controllers/userController.js";
@@ -14,12 +14,13 @@ router.get("/profile", protect, (req, res) => {
         user: req.user
     });
 });
-router.put('/profile',verifyToken,updateUserProfile);
-router.post("/register", (req,res)=>{
+router.put('/profile', verifyToken, updateUserProfile);
+router.post("/register", (req, res) => {
     console.log("Register route hit");
-    registerUser(req,res);
+    registerUser(req, res);
 });
 router.post("/login", loginUser);
-router.get("/users",verifyToken,isAdmin,getAllUsers);
+router.get("/users", verifyToken, isAdmin, getAllUsers);
+router.get("/me", protect, getMe);
 
 export default router;
