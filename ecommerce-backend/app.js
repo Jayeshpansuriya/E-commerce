@@ -20,7 +20,7 @@ app.use(cors())//? This enables CORS (Cross-Origin Resource Sharing).
 // CORS is required to allow communication between them.
 
 app.use("/api/products",productRoutes);
-app.use("/api/users", userRoutes);
+app.use("/api/v1/users", userRoutes);
 //test route
 app.get("/",(req,res)=>{
     res.send("API is running..");
