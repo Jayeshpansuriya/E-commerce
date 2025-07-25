@@ -15,7 +15,10 @@ router.get("/profile", protect, (req, res) => {
     });
 });
 router.put('/profile',verifyToken,updateUserProfile);
-router.post("/register", registerUser);
+router.post("/register", (req,res)=>{
+    console.log("Register route hit");
+    registerUser(req,res);
+});
 router.post("/login", loginUser);
 router.get("/users",verifyToken,isAdmin,getAllUsers);
 
