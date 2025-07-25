@@ -32,6 +32,28 @@ h1 {
   gap: 20px;
   justify-content: center;
 }
+/* Add this in your CSS file or inside <style> tag */
+.popup-message {
+  position: fixed;
+  top: 20px;
+  left: -300px;
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  transition: left 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+}
+
+.popup-message.show {
+  left: 20px;
+  opacity: 1;
+}
+
+
 
 .btn {
   padding: 12px 25px;

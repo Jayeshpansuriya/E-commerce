@@ -23,7 +23,10 @@ async function registerUser(){
                 messageBox.style.color="green";
                 messageBox.innerText="registration successfully";
 
+                const popup = document.getElementById("popup");
+                popup.style.display="block";
                 setTimeout(()=>{
+                  popup.style.display="none";
                     window.location.href="../public/index.html";
                 },3000);
 
