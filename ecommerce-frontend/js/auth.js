@@ -22,6 +22,11 @@ async function registerUser(){
             if(response.ok){
                 messageBox.style.color="green";
                 messageBox.innerText="registration successfully";
+
+                setTimeout(()=>{
+                    window.location.href="../public/index.html";
+                },3000);
+
             }else{
                 messageBox.style.color="red";
                 messageBox.innerText=data.message|| "registration failed";
