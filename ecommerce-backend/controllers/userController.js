@@ -5,27 +5,63 @@ import bcrypt from "bcrypt";
 
 
 export const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
-
   try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exist" });
+    const { name, email, password, role } = req.body;
+
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      return res.status(400).json({ message: "User already exists" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
+
+    const newUser = new User({
       name,
       email,
       password: hashedPassword,
+      role: role || 'user'  // 👈 role request se le rahe hai, warna 'user' default
     });
-    res.status(201).json({ message: "User registered successfully", newUser });
 
-  } catch (err) {
-    res.status(500).json({ message: "something went wrong", error: err.message });
+    await newUser.save();
+
+    res.status(201).json({
+      message: "User registered successfully",
+      newUser,
+    });
+
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(500).json({ message: "Server error" });
   }
-
 };
+// export const loginUser = async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const existingUser = await User.findOne({ email });
+
+//     if (!existingUser) {
+//       return res.status(401).json({ message: "User not found" });
+//     }
+
+//     const isPasswordMatch = await bcrypt.compare(password, existingUser.password);
+//     if (!isPasswordMatch) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
+
+//     const token = jwt.sign(
+//       { id: existingUser._id, role: existingUser.role },
+//       process.env.JWT_SECRET,
+//       { expiresIn: "1d" }
+
+//     );
+
+//     res.status(200).json({ message: "Login successful", token });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Login error", error: error.message });
+//   }
+// };
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -46,10 +82,19 @@ export const loginUser = async (req, res) => {
       { id: existingUser._id, role: existingUser.role },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
-
     );
 
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        id: existingUser._id,
+        name: existingUser.name,
+        email: existingUser.email,
+        role: existingUser.role,
+      }
+    });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Login error", error: error.message });
