@@ -27,7 +27,7 @@
 import express from "express";
 import {
     createProduct,
-  getAllProducts,
+  getAllProduct,
   getProductById,
   updateProduct,
   deleteProduct,
@@ -37,8 +37,10 @@ import { isAdmin } from "../middlewares/isAdmin.js";
 
 const router = express.Router();
 
-router.get("/",getAllProducts);
+router.get("/",getAllProduct);
 router.get("/:id",getProductById);
+
+router.post("/", protect, createProduct);
 
 router.post("/",verifyToken,isAdmin,createProduct);
 router.put("/:id",verifyToken,isAdmin,updateProduct);
