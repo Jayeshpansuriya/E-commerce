@@ -1,3 +1,10 @@
+
+const token = localStorage.getItem("token");
+if (!token) {
+    alert("Please login first");
+    window.location.href = "../pages/login.html";
+}
+
 const productList = document.getElementById("productList");
 const addProductForm = document.getElementById("addProductForm");
 const message = document.getElementById("message");
@@ -20,7 +27,7 @@ async function fetchProducts() {
 //? show products in html
 function showProducts(product) {
     productList.innerHTML = "";
-    productList.forEach((product) => {
+    product.forEach((product) => {
         const div = document.createElement("div");
         div.classList.add("product-card");
 
@@ -43,51 +50,58 @@ addProductForm.addEventListener("submit", async (e) => {
     const name = document.getElementById("name").value;
     const price = document.getElementById("price").value;
     const image = document.getElementById("image").value;
+    // const category = document.getElementById("category").value;
+    // const description = document.getElementById("description").value;
+
+    const token = localStorage.getItem("token");
 
     try {
         const res = await fetch(BASE_URL, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
             body: JSON.stringify({ name, price, image }),
         });
+        const data = await res.json();
 
-        if(res.ok){
-            message.textContent="Product added successfully!";
+        if (res.ok) {
+            message.textContent = "Product added successfully!";
             fetchProducts();
             addProductForm.reset();
 
-        }else{
-            message.textContent = data.message|| "Failed to add product.";
+        } else {
+            message.textContent = data.message || "Failed to add product.";
         }
 
     } catch (error) {
         console.error(err);
         message.textContent = "server error";
     }
-})
+});
 
 //? Delete Product 
-async function deleteProduct(productId){
+async function deleteProduct(productId) {
     try {
-        const res = await fetch(`${BASE_URL}/${productId}`,{
-            method:"DELETE",
+        const res = await fetch(`${BASE_URL}/${productId}`, {
+            method: "DELETE",
         });
-        const datat = await res.json();
-        if(res.ok){
-            message.textContent="Product delete successfully";
+        const data = await res.json();
+        if (res.ok) {
+            message.textContent = "Product delete successfully";
             fetchProducts();
         }
-        else{
+        else {
             message.textContent = data.message || "Failed to delete.";
         }
-        
+
     } catch (error) {
         console.error("Delete error:", err);
-        message.textContent="Server error.";
-        
+        message.textContent = "Server error.";
+
     }
 }
 
 fetchProducts();
+
