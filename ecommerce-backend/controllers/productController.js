@@ -116,6 +116,8 @@ export const createProduct = async (req, res) => {
       category,
     });
     const savedProduct = await product.save();
+    console.log("✅ Product saved:", savedProduct);
+
     res.status(201).json({
       message: "Product created successfully",
       product: savedProduct,

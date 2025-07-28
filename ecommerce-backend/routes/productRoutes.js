@@ -40,7 +40,7 @@ const router = express.Router();
 router.get("/",getAllProduct);
 router.get("/:id",getProductById);
 
-router.post("/", protect, createProduct);
+// router.post("/", protect, createProduct);
 
 router.post("/",verifyToken,isAdmin,createProduct);
 router.put("/:id",verifyToken,isAdmin,updateProduct);
