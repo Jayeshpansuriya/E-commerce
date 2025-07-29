@@ -1,27 +1,49 @@
-<!-- public/dashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard - Product Manager</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/dashbord_css.css" />
+  
 </head>
 <body>
-  <h1>Product Dashboard</h1>
-  <p id="message"></p>
+  <header>
+    <h1>🛒 Product Dashboard</h1>
+  </header>
 
-  <form id="addProductForm">
-    <h3>Add New Product</h3>
-    <input type="text" id="name" placeholder="Product Name" required /><br><br>
-    <input type="number" id="price" placeholder="Price" required /><br><br>
-    <input type="text" id="image" placeholder="Image URL" required /><br><br>
-    <button type="submit">Add Product</button>
-  </form>
-
-  <section id="productList">
-    <!-- Product cards will be shown here -->
+  <main class="container amazon-layout">
+  <!-- Left: Product form in a card -->
+  <section class="form-card">
+    <h2>Add New Product</h2>
+    <form id="addProductForm">
+      <input type="text" id="name" placeholder="Product Name" required /><br />
+      <input type="number" id="price" placeholder="Price" required /><br />
+      <input type="text" id="image" placeholder="Image URL" required /><br />
+      <button type="submit">Add Product</button>
+    </form>
+    <p id="message"></p>
   </section>
+
+  <!-- Right: Product cards in a scrollable area -->
+  <section id="productList" class="product-list-grid">
+    <!-- Product cards will be injected here -->
+  </section>
+  <!-- Edit Product Modal -->
+<div id="editModal" style="display: none; position: fixed; top: 10%; left: 30%; width: 40%; background-color: white; border: 2px solid black; padding: 20px; z-index: 1000;">
+  <h2>Edit Product</h2>
+  <input type="text" id="editName" placeholder="Product Name"><br><br>
+  <input type="text" id="editDescription" placeholder="Description"><br><br>
+  <input type="number" id="editPrice" placeholder="Price"><br><br>
+  <input type="text" id="editImage" placeholder="Image URL"><br><br>
+  <input type="number" id="editStock" placeholder="Stock"><br><br>
+  <input type="text" id="editCategory" placeholder="Category"><br><br>
+  <button onclick="submitEdit()">Save Changes</button>
+  <button onclick="closeEditModal()">Cancel</button>
+</div>
+</main>
+
+
 
   <script src="../js/dashboard.js"></script>
 </body>

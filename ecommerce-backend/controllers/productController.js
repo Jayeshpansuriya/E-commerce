@@ -163,7 +163,7 @@ export const getProductById = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const updated = await Product.findByIdAndUpdate(req.param.id, req.body, {
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!updated) return res.status(404).json({ message: "Product not found" });
@@ -178,8 +178,7 @@ export const updateProduct = async (req, res) => {
   }
 };
 
-//? delete product (admin only )
-
+//? delete product (admin only)
 export const deleteProduct = async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
@@ -193,4 +192,4 @@ export const deleteProduct = async (req, res) => {
     res.status(500).json({ message: "Failed to delete prodct" });
 
   }
-}
+};
